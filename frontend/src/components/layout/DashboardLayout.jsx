@@ -2,27 +2,28 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 function DashboardLayout({ children }) {
-
     return (
+        <div className="h-screen bg-slate-100 flex overflow-hidden">
 
-        <div className="min-h-screen bg-slate-100 flex">
-
+            {/* Fixed Sidebar */}
             <Sidebar />
 
-            <div className="flex-1 flex flex-col">
+            {/* Main Area */}
+            <div className="flex-1 flex flex-col min-w-0">
 
-                <Navbar />
+                {/* Fixed Navbar */}
+                <div className="shrink-0">
+                    <Navbar />
+                </div>
 
-                <main className="flex-1 p-8">
-
+                {/* Only this area scrolls */}
+                <main className="flex-1 overflow-y-auto p-8">
                     {children}
-
                 </main>
 
             </div>
 
         </div>
-
     );
 }
 

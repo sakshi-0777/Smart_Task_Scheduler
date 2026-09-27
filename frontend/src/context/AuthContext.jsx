@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { updateCurrentUser } from "../services/userService";
 
 const AuthContext = createContext();
 
@@ -41,6 +42,20 @@ export function AuthProvider({ children }) {
 
     };
 
+    const updateUser = async (userData) => {
+
+        const updatedUser = await updateCurrentUser(userData);
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(updatedUser)
+        );
+
+        setUser(updatedUser);
+
+        return updatedUser;
+    };
+
     return (
 
         <AuthContext.Provider
@@ -49,6 +64,7 @@ export function AuthProvider({ children }) {
                 user,
                 login,
                 logout,
+                updateUser,
                 isAuthenticated: !!token,
             }}
         >

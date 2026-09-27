@@ -7,6 +7,10 @@ import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
+import Settings from "./pages/Settings";
+import logo from "./assets/logo.png";
+import AddTask from "./pages/AddTask";
+import Tasks from "./pages/Tasks";
 
 function App() {
 
@@ -53,6 +57,33 @@ function App() {
 
                         <ChangePassword />
 
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/settings"
+                element={
+                    <ProtectedRoute>
+                        <Settings/>
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/add-task"
+                element={
+                    <ProtectedRoute>
+                        <AddTask />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/tasks"
+                element={
+                    <ProtectedRoute>
+                        <Tasks />
                     </ProtectedRoute>
                 }
             />

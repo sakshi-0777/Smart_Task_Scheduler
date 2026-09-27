@@ -46,6 +46,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
+    
     public LoginResponse login(LoginRequest request) {
 
     authenticationManager.authenticate(
@@ -66,8 +68,28 @@ public class UserService {
 
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not foung"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+
+    public User updateUser(String currentEmail, String name, String email) {
+
+        User user = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Check whether the new email belongs to another user
+        if (!currentEmail.equals(email)
+                && userRepository.findByEmail(email).isPresent()) {
+
+            throw new RuntimeException("Email already exists!");
+        }
+
+        user.setName(name);
+        user.setEmail(email);
+
+        return userRepository.save(user);
+    }
+
 
     public void changePassword(String email, String currentPassword, String newPassword){
         User user = userRepository.findByEmail(email)
@@ -88,5 +110,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+
+
 
 }

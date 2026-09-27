@@ -64,7 +64,23 @@ public class UserController {
 
         return "Password changed successfully!";
     }
-    
+
+
+    @PutMapping("/me")
+public User updateCurrentUser(
+        @RequestBody User request,
+        Authentication authentication
+) {
+
+    String currentEmail = authentication.getName();
+
+        return userService.updateUser(
+                currentEmail,
+                request.getName(),
+                request.getEmail()
+        );
+    }
+        
 
 }
 
